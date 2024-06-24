@@ -6,7 +6,9 @@ import (
 )
 
 func main(){
-	name := "Subodh Choure"
-	msg := greetings.MorningGreetings(name)
-	fmt.Print(msg)
+	var name string
+    fmt.Println("Please enter your name:")
+    fmt.Scanf("%s", &name)
+    msg := greetings.MorningGreetings(name)
+    fmt.Println(msg)
 }
