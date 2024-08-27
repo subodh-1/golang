@@ -17,7 +17,7 @@ func (s Seq[T]) Channel() <-chan T {
 	return ch
 }
 
-// Allow iteration over the Seq[T] using range.
+// Iterator provides a channel-based iterator for Seq[T].
 func (s Seq[T]) Iterator() <-chan T {
 	return s.Channel()
 }
