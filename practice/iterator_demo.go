@@ -3,8 +3,6 @@ package main
 
 import (
 	"fmt"
-
-	"github.com/subodh-1/golang/iter"
 )
 
 type List[T any] struct {
@@ -29,14 +27,15 @@ func (lst *List[T]) Push(v T) {
 }
 
 // function to iterate the elements of the List Generic
-func (lst *List[T]) All() iter.Seq[T] {
-	return func(yield func(T) bool) {
+func (lst *List[T]) All() <-chan T {
+	ch := make(chan T)
+	go func() {
 		for e := lst.head; e != nil; e = e.next {
-			if !yield(e.val) {
-				return
-			}
+			ch <- e.val
 		}
-	}
+		close(ch)
+	}()
+	return ch
 }
 
 func main() {
@@ -51,4 +50,5 @@ func main() {
 	for e := range lst.All() {
 		fmt.Println(e)
 	}
+
 }
